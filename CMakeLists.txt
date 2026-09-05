@@ -34,6 +34,14 @@ endif()
 if(NOT TARGET graphvex)
 add_library(graphvex STATIC
     src/graphvex/version.c
+    src/buffer/buffer.c
+    src/buffer/color_buffer.c
+    src/buffer/depth_buffer.c
+    src/buffer/frame_buffer.c
+    src/buffer/height_buffer.c
+    src/buffer/normal_buffer.c
+    src/buffer/shadow_buffer.c
+    src/buffer/stencil_buffer.c
     src/font/font.c
     src/font/font_bake.c
     src/io/vfs.c
@@ -67,3 +75,9 @@ if(APPLE)
     )
 endif()
 endif() # NOT TARGET graphvex
+
+# Buffer smoke test (relocated from the vexspoke `anti` harness with the move).
+add_executable(buffer_test
+    tests/buffer_test.c
+)
+target_link_libraries(buffer_test PRIVATE graphvex)
