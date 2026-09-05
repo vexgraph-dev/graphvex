@@ -1,5 +1,6 @@
 #include "nio/mem.h"
 #include "oop/type.h"
+#include "graphvex/type.h"
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
 #include "font.h"
@@ -294,7 +295,7 @@ Font *Font_load(const char *path) {
     }
     fread(ttf_buffer, 1, size, f);
     fclose(f);
-    Font *font = (Font*) Memory_alloc(TYPE_PANEL_SINGLETON, sizeof(Font));
+    Font *font = (Font*) Memory_alloc(TYPE_FONT_SINGLETON, sizeof(Font));
     if (font)
         memset(font, 0, sizeof(Font));
     if (!font) {
@@ -811,7 +812,7 @@ Font *Font_createFromBaked(const uint8_t *atlasMono, size_t pageCount,
         return NULL;
     if (count > 0 && (!codepoints || !metrics))
         return NULL;
-    Font *font = (Font*) Memory_alloc(TYPE_PANEL_SINGLETON, sizeof(Font));
+    Font *font = (Font*) Memory_alloc(TYPE_FONT_SINGLETON, sizeof(Font));
     if (!font)
         return NULL;
     memset(font, 0, sizeof(Font));
