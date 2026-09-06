@@ -15,8 +15,8 @@
 // include this file (upstream builds standalone).
 
 // --- GRAPHVEX GPU OBJECTS ---
-#define ID_FONT 0x0100u
+#define ID_FONT	0x0100u
 
-#define TYPE_FONT_SINGLETON (PROJ_GRAPHVEX | FORM_SINGLETON | ID_FONT)
+#define TYPE_FONT_SINGLETON	(PROJ_GRAPHVEX | FORM_SINGLETON | ID_FONT)
 
 #endif

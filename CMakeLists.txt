@@ -4,6 +4,10 @@ project(graphvex C)
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+if(APPLE)
+    enable_language(OBJC)
+endif()
+
 # Release: dead-code stripping so unused symbols cost zero bytes in artifacts.
 # (Duplicated per repo for standalone builds; harmless when built in-tree.)
 if(APPLE)
@@ -68,10 +72,18 @@ endif()
 
 # Apple GPU/bridge frameworks (vk_iosurface.c, texture.c image decode).
 if(APPLE)
+    target_sources(graphvex PRIVATE
+        src/objc/font_cocoa.m
+    )
+    set_source_files_properties(src/objc/font_cocoa.m PROPERTIES
+        COMPILE_OPTIONS "-fobjc-arc")
     target_link_libraries(graphvex PUBLIC
         "-framework CoreFoundation"
         "-framework CoreGraphics"
         "-framework IOSurface"
+        "-framework Foundation"
+        "-framework AppKit"
+        "-framework CoreText"
     )
 endif()
 endif() # NOT TARGET graphvex
