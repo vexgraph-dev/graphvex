@@ -54,6 +54,27 @@ add_library(graphvex STATIC
     src/vulkan/vk_view.c
     src/vulkan/vk_iosurface.c
     src/vulkan/texture/texture.c
+    src/image/image.c
+    src/sync/fence.c
+    src/sync/semaphore.c
+    src/sync/command_buffer.c
+    src/sync/command_queue.c
+    src/buffer/gpu_buffer.c
+    src/image/bindless_heap.c
+    src/paint/stroke.c
+    src/paint/brush.c
+    src/paint/vector_brush.c
+    src/paint/raster_brush.c
+    src/draw/drawable.c
+    src/scene/pipeline.c
+    src/scene/pass.c
+    src/scene/scene.c
+    src/mesh/mesh.c
+    src/mesh/meshlet.c
+    src/image/swapchain.c
+    src/vector/shape.c
+    src/draw/layered_drawable.c
+    src/draw/vector_drawable.c
 )
 
 target_include_directories(graphvex PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
