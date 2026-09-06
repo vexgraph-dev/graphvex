@@ -114,6 +114,11 @@ static unsigned char *loadSpvAny(const char *name, size_t *outSize) {
         if (slash) {
             *slash = 0;
             char candidate[1024];
+            // Inside .app bundle: Contents/MacOS/.. -> Contents/Resources/spv/
+            snprintf(candidate, sizeof(candidate), "%s/../Resources/spv/%s", path, name);
+            code = loadSpvFile(candidate, outSize);
+            if (code)
+                return code;
             snprintf(candidate, sizeof(candidate), "%s/../src/vulkan/spv/%s", path, name);
             code = loadSpvFile(candidate, outSize);
             if (code)
