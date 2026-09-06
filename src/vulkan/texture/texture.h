@@ -38,3 +38,11 @@ int32_t Texture_loadRaw(const void *rgbaData, uint32_t width, uint32_t height);
 // Updates a sub-region of an existing texture from raw RGBA8 data in memory.
 // Useful for dynamic atlases.
 bool Texture_updateSubRaw(int32_t id, const void *rgbaData, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+
+// Replaces or reallocates the raw RGBA8 data of an existing bindless texture ID.
+// If dimensions match, it updates the existing texture in-place.
+// If dimensions change, it destroys the old VkImage and allocates a new one at the same slot.
+int32_t Texture_replaceRaw(int32_t id, const void *rgbaData, uint32_t width, uint32_t height);
+
+// Frees the GPU resources for a bindless texture ID.
+void Texture_free(int32_t id);
