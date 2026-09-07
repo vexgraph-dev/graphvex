@@ -28,6 +28,7 @@ typedef struct Swapchain {
 // Constructors
 Swapchain *Swapchain_0(void);
 Swapchain *Swapchain_1(void *nativeHandle);
+Swapchain *Swapchain_2(void *nativeHandle, uint32_t count);
 Swapchain *Swapchain_3(void *nativeHandle, uint32_t w, uint32_t h);
 Swapchain *Swapchain_4(void *nativeHandle, uint32_t w, uint32_t h, uint32_t count);
 
@@ -46,7 +47,6 @@ void Swapchain_setImageCount(Swapchain *self, uint32_t count);
 void Swapchain_setCurrentIndex(Swapchain *self, uint32_t index);
 void Swapchain_setVsync(Swapchain *self, bool vsync);
 void Swapchain_setNativeHandle(Swapchain *self, void *nativeHandle);
-void Swapchain_setTypeId(Swapchain *self, uint64_t typeId);
 
 // Symmetric Getters
 uint32_t Swapchain_getWidth(const Swapchain *self);

@@ -37,6 +37,7 @@
  * Constructors:
  *   - Swapchain()                                   : Swapchain_0()
  *   - Swapchain(nativeHandle)                       : Swapchain_1(nativeHandle)
+ *   - Swapchain(handle, count)                      : Swapchain_2(handle, count)
  *   - Swapchain(nativeHandle, w, h)                 : Swapchain_3(nativeHandle, w, h)
  *   - Swapchain(nativeHandle, w, h, count)          : Swapchain_4(nativeHandle, w, h, count)
  *
@@ -55,7 +56,6 @@
  *   - Swapchain_setCurrentIndex(self, index)
  *   - Swapchain_setVsync(self, vsync)
  *   - Swapchain_setNativeHandle(self, nativeHandle)
- *   - Swapchain_setTypeId(self, typeId)
  *
  * Getters:
  *   - Swapchain_getWidth(self)
@@ -78,6 +78,10 @@ Swapchain *Swapchain_0(void) {
 
 Swapchain *Swapchain_1(void *nativeHandle) {
     return Swapchain_4(nativeHandle, 1, 1, 2);
+}
+
+Swapchain *Swapchain_2(void *nativeHandle, uint32_t count) {
+    return Swapchain_4(nativeHandle, 1u, 1u, count);
 }
 
 Swapchain *Swapchain_3(void *nativeHandle, uint32_t w, uint32_t h) {
@@ -252,12 +256,6 @@ void Swapchain_setNativeHandle(Swapchain *self, void *nativeHandle) {
     if (!self)
         return;
     (*self).nativeHandle = nativeHandle;
-}
-
-void Swapchain_setTypeId(Swapchain *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS
