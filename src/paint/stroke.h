@@ -43,7 +43,6 @@ void Stroke_setDash(Stroke *self, float dash);
 void Stroke_setCap(Stroke *self, uint32_t cap);
 void Stroke_setJoin(Stroke *self, uint32_t join);
 void Stroke_setColor(Stroke *self, uint32_t color);
-void Stroke_setTypeId(Stroke *self, uint64_t typeId);
 
 // Null-safe inspectors (floats yield 0.0f, integers yield 0u/0)
 float Stroke_getWidth(const Stroke *self);

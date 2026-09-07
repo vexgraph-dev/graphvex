@@ -29,7 +29,6 @@ void Brush_free(Brush *self);
 // Symmetric mutators (null-safe no-op on null self)
 void Brush_setColor(Brush *self, uint32_t color);
 void Brush_setOpacity(Brush *self, float opacity);
-void Brush_setTypeId(Brush *self, uint64_t typeId);
 
 // Null-safe inspectors (integers yield 0u/0, opacity yields 0.0f)
 uint32_t Brush_getColor(const Brush *self);

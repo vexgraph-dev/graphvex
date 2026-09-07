@@ -46,7 +46,6 @@ void Mesh_recomputeBounds(Mesh *self);
 // Symmetric mutators (null-safe no-op on null self)
 void Mesh_setVertices(Mesh *self, const float *verts, size_t count);
 void Mesh_setIndices(Mesh *self, const uint32_t *indices, size_t count);
-void Mesh_setTypeId(Mesh *self, uint64_t typeId);
 void Mesh_setBounds(Mesh *self, const float *bounds6);
 
 // Null-safe inspectors (integers/counts yield 0, pointers yield nullptr)

@@ -48,7 +48,6 @@
  *   - Pass_setClearDepth(self, clearDepth)
  *   - Pass_setClearOnLoad(self, clearOnLoad)
  *   - Pass_setTarget(self, target)
- *   - Pass_setTypeId(self, typeId)
  *
  * Getters:
  *   - Pass_getPassType(self)
@@ -152,12 +151,6 @@ void Pass_setTarget(Pass *self, Image *target) {
     if (!self)
         return;
     (*self).target = target;
-}
-
-void Pass_setTypeId(Pass *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

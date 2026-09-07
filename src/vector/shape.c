@@ -63,7 +63,6 @@
  *
  * Setters:
  *   - Shape_setClosed(self, closed)
- *   - Shape_setTypeId(self, typeId)
  *
  * Getters:
  *   - Shape_isClosed(self)
@@ -414,12 +413,6 @@ void Shape_setClosed(Shape *self, bool closed) {
     if (!self)
         return;
     (*self).closed = closed;
-}
-
-void Shape_setTypeId(Shape *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

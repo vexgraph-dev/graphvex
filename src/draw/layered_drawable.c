@@ -62,7 +62,6 @@
  *   - LayeredDrawable_setHeight(self, height)
  *   - LayeredDrawable_setSize(self, w, h)
  *   - LayeredDrawable_setDirty(self, dirty)
- *   - LayeredDrawable_setTypeId(self, typeId)
  *
  * Getters:
  *   - LayeredDrawable_getActiveIndex(self)
@@ -366,12 +365,6 @@ void LayeredDrawable_setDirty(LayeredDrawable *self, bool dirty) {
     if (!self)
         return;
     (*self).dirty = dirty;
-}
-
-void LayeredDrawable_setTypeId(LayeredDrawable *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

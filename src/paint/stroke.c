@@ -43,7 +43,6 @@
  *   - Stroke_setCap(self, cap)
  *   - Stroke_setJoin(self, join)
  *   - Stroke_setColor(self, color)
- *   - Stroke_setTypeId(self, typeId)
  *
  * Getters:
  *   - Stroke_getWidth(self)
@@ -119,12 +118,6 @@ void Stroke_setColor(Stroke *self, uint32_t color) {
     if (!self)
         return;
     (*self).color = color;
-}
-
-void Stroke_setTypeId(Stroke *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

@@ -43,7 +43,6 @@ bool Shape_fromSvg(const char *pathStr, Shape *dest);
 
 // Symmetric Setters
 void Shape_setClosed(Shape *self, bool closed);
-void Shape_setTypeId(Shape *self, uint64_t typeId);
 
 // Symmetric Getters
 bool Shape_isClosed(const Shape *self);

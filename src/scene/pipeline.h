@@ -33,7 +33,6 @@ void Pipeline_setCullMode(Pipeline *self, uint32_t cullMode);
 void Pipeline_setDepthTest(Pipeline *self, bool depthTest);
 void Pipeline_setDepthWrite(Pipeline *self, bool depthWrite);
 void Pipeline_setShaderName(Pipeline *self, const char *shaderName);
-void Pipeline_setTypeId(Pipeline *self, uint64_t typeId);
 
 // Getters
 uint32_t Pipeline_getStageMask(const Pipeline *self);

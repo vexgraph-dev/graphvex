@@ -40,7 +40,6 @@ void Pass_setClearColor(Pass *self, uint32_t clearColor);
 void Pass_setClearDepth(Pass *self, float clearDepth);
 void Pass_setClearOnLoad(Pass *self, bool clearOnLoad);
 void Pass_setTarget(Pass *self, Image *target);
-void Pass_setTypeId(Pass *self, uint64_t typeId);
 
 // Getters
 uint32_t Pass_getPassType(const Pass *self);

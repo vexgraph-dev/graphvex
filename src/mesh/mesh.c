@@ -58,7 +58,6 @@
  * Setters:
  *   - Mesh_setVertices(self, verts, count)
  *   - Mesh_setIndices(self, indices, count)
- *   - Mesh_setTypeId(self, typeId)
  *   - Mesh_setBounds(self, bounds6)
  *
  * Getters:
@@ -692,12 +691,6 @@ void Mesh_setIndices(Mesh *self, const uint32_t *indices, size_t count) {
         (*self).indices = copy;
         (*self).indexCount = count;
     }
-}
-
-void Mesh_setTypeId(Mesh *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 void Mesh_setBounds(Mesh *self, const float *bounds6) {

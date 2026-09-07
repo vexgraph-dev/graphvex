@@ -58,7 +58,6 @@
  *   - Meshlet_setVertexCount(self, count)
  *   - Meshlet_setTriangleOffset(self, offset)
  *   - Meshlet_setTriangleCount(self, count)
- *   - Meshlet_setTypeId(self, typeId)
  *   - Meshlet_setBounds(self, bounds6)
  *   - Meshlet_setCone(self, cone4)
  *
@@ -374,12 +373,6 @@ void Meshlet_setTriangleCount(Meshlet *self, uint32_t count) {
     if (!self)
         return;
     (*self).triangleCount = count;
-}
-
-void Meshlet_setTypeId(Meshlet *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 void Meshlet_setBounds(Meshlet *self, const float *bounds6) {

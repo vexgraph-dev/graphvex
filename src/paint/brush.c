@@ -39,7 +39,6 @@
  * Setters:
  *   - Brush_setColor(self, color)
  *   - Brush_setOpacity(self, opacity)
- *   - Brush_setTypeId(self, typeId)
  *
  * Getters:
  *   - Brush_getColor(self)
@@ -91,12 +90,6 @@ void Brush_setOpacity(Brush *self, float opacity) {
     if (!self)
         return;
     (*self).opacity = opacity;
-}
-
-void Brush_setTypeId(Brush *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

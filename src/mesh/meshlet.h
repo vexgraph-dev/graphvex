@@ -48,7 +48,6 @@ void Meshlet_setVertexOffset(Meshlet *self, uint32_t offset);
 void Meshlet_setVertexCount(Meshlet *self, uint32_t count);
 void Meshlet_setTriangleOffset(Meshlet *self, uint32_t offset);
 void Meshlet_setTriangleCount(Meshlet *self, uint32_t count);
-void Meshlet_setTypeId(Meshlet *self, uint64_t typeId);
 void Meshlet_setBounds(Meshlet *self, const float *bounds6);
 void Meshlet_setCone(Meshlet *self, const float *cone4);
 

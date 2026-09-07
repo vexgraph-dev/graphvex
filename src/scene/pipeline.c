@@ -44,7 +44,6 @@
  *   - Pipeline_setDepthTest(self, depthTest)
  *   - Pipeline_setDepthWrite(self, depthWrite)
  *   - Pipeline_setShaderName(self, shaderName)
- *   - Pipeline_setTypeId(self, typeId)
  *
  * Getters:
  *   - Pipeline_getStageMask(self)
@@ -135,12 +134,6 @@ void Pipeline_setShaderName(Pipeline *self, const char *shaderName) {
     }
     strncpy((*self).shaderName, shaderName, sizeof((*self).shaderName) - 1);
     (*self).shaderName[sizeof((*self).shaderName) - 1] = '\0';
-}
-
-void Pipeline_setTypeId(Pipeline *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS

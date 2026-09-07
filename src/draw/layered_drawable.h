@@ -66,7 +66,6 @@ void LayeredDrawable_setWidth(LayeredDrawable *self, uint32_t width);
 void LayeredDrawable_setHeight(LayeredDrawable *self, uint32_t height);
 void LayeredDrawable_setSize(LayeredDrawable *self, uint32_t w, uint32_t h);
 void LayeredDrawable_setDirty(LayeredDrawable *self, bool dirty);
-void LayeredDrawable_setTypeId(LayeredDrawable *self, uint64_t typeId);
 
 uint32_t LayeredDrawable_getActiveIndex(const LayeredDrawable *self);
 uint32_t LayeredDrawable_getVisibleMask(const LayeredDrawable *self);
