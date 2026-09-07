@@ -78,7 +78,7 @@ static uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags proper
 }
 
 bool Texture_isReady(void) {
-    return s_device != VK_NULL_HANDLE;
+    return s_device != VK_NULL_HANDLE && s_instance != VK_NULL_HANDLE && s_gpa != nullptr;
 }
 
 bool Texture_initModule(void *instance, void *gpa, void *phys, void *device, void *queue, uint32_t queueFamily) {
@@ -162,6 +162,15 @@ bool Texture_initModule(void *instance, void *gpa, void *phys, void *device, voi
 }
 
 void Texture_shutdown(void) {
+    if (!Texture_isReady() || !s_gpa || s_instance == VK_NULL_HANDLE) {
+        s_device = VK_NULL_HANDLE;
+        s_instance = VK_NULL_HANDLE;
+        s_phys = VK_NULL_HANDLE;
+        s_queue = VK_NULL_HANDLE;
+        s_gpa = nullptr;
+        s_textureCount = 0;
+        return;
+    }
     VK_LOAD(DestroySampler)
     VK_LOAD(DestroyImageView)
     VK_LOAD(DestroyImage)
@@ -171,17 +180,47 @@ void Texture_shutdown(void) {
     VK_LOAD(DestroyCommandPool)
 
     for (int i = 0; i < s_textureCount; i++) {
-        DestroySampler_fn(s_device, s_samplers[i], nullptr);
-        DestroyImageView_fn(s_device, s_views[i], nullptr);
-        DestroyImage_fn(s_device, s_images[i], nullptr);
-        FreeMemory_fn(s_device, s_memories[i], nullptr);
+        if (s_samplers[i] != VK_NULL_HANDLE && DestroySampler_fn) {
+            DestroySampler_fn(s_device, s_samplers[i], nullptr);
+            s_samplers[i] = VK_NULL_HANDLE;
+        }
+        if (s_views[i] != VK_NULL_HANDLE && DestroyImageView_fn) {
+            DestroyImageView_fn(s_device, s_views[i], nullptr);
+            s_views[i] = VK_NULL_HANDLE;
+        }
+        if (s_images[i] != VK_NULL_HANDLE && DestroyImage_fn) {
+            DestroyImage_fn(s_device, s_images[i], nullptr);
+            s_images[i] = VK_NULL_HANDLE;
+        }
+        if (s_memories[i] != VK_NULL_HANDLE && FreeMemory_fn) {
+            FreeMemory_fn(s_device, s_memories[i], nullptr);
+            s_memories[i] = VK_NULL_HANDLE;
+        }
+        s_widths[i] = 0;
+        s_heights[i] = 0;
     }
-    
-    DestroyCommandPool_fn(s_device, s_cmdPool, nullptr);
-    DestroyDescriptorPool_fn(s_device, s_descPool, nullptr);
-    DestroyDescriptorSetLayout_fn(s_device, s_descLayout, nullptr);
-    
+
+    if (s_cmdPool != VK_NULL_HANDLE && DestroyCommandPool_fn) {
+        DestroyCommandPool_fn(s_device, s_cmdPool, nullptr);
+        s_cmdPool = VK_NULL_HANDLE;
+    }
+    if (s_descPool != VK_NULL_HANDLE && DestroyDescriptorPool_fn) {
+        DestroyDescriptorPool_fn(s_device, s_descPool, nullptr);
+        s_descPool = VK_NULL_HANDLE;
+    }
+    if (s_descLayout != VK_NULL_HANDLE && DestroyDescriptorSetLayout_fn) {
+        DestroyDescriptorSetLayout_fn(s_device, s_descLayout, nullptr);
+        s_descLayout = VK_NULL_HANDLE;
+    }
+
+    s_bindlessSet = VK_NULL_HANDLE;
     s_textureCount = 0;
+
+    s_device = VK_NULL_HANDLE;
+    s_instance = VK_NULL_HANDLE;
+    s_phys = VK_NULL_HANDLE;
+    s_queue = VK_NULL_HANDLE;
+    s_gpa = nullptr;
 }
 
 int32_t Texture_load(const char *vfsPath) {
@@ -1042,7 +1081,7 @@ int32_t Texture_replaceRaw(int32_t id, const void *rgbaData, uint32_t width, uin
 }
 
 void Texture_free(int32_t id) {
-    if (!Texture_isReady() || !s_gpa) return;
+    if (!Texture_isReady() || !s_gpa || s_instance == VK_NULL_HANDLE) return;
     if (id < 0 || id >= s_textureCount) return;
     VK_LOAD(DeviceWaitIdle)
     VK_LOAD(DestroySampler)
@@ -1051,19 +1090,19 @@ void Texture_free(int32_t id) {
     VK_LOAD(FreeMemory)
     if (DeviceWaitIdle_fn)
         DeviceWaitIdle_fn(s_device);
-    if (s_samplers[id] != VK_NULL_HANDLE) {
+    if (s_samplers[id] != VK_NULL_HANDLE && DestroySampler_fn) {
         DestroySampler_fn(s_device, s_samplers[id], nullptr);
         s_samplers[id] = VK_NULL_HANDLE;
     }
-    if (s_views[id] != VK_NULL_HANDLE) {
+    if (s_views[id] != VK_NULL_HANDLE && DestroyImageView_fn) {
         DestroyImageView_fn(s_device, s_views[id], nullptr);
         s_views[id] = VK_NULL_HANDLE;
     }
-    if (s_images[id] != VK_NULL_HANDLE) {
+    if (s_images[id] != VK_NULL_HANDLE && DestroyImage_fn) {
         DestroyImage_fn(s_device, s_images[id], nullptr);
         s_images[id] = VK_NULL_HANDLE;
     }
-    if (s_memories[id] != VK_NULL_HANDLE) {
+    if (s_memories[id] != VK_NULL_HANDLE && FreeMemory_fn) {
         FreeMemory_fn(s_device, s_memories[id], nullptr);
         s_memories[id] = VK_NULL_HANDLE;
     }
