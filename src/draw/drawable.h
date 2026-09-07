@@ -8,6 +8,7 @@
 #include "image/image.h"
 #include "paint/brush.h"
 #include "paint/stroke.h"
+#include "vector/shape.h"
 
 // draw/drawable.h — Single-layer raster board owning one Image; CPU stub.
 //
@@ -34,6 +35,8 @@ void Drawable_fillRect(Drawable *self, float x, float y, float w, float h, const
 void Drawable_drawRect(Drawable *self, float x, float y, float w, float h, const Stroke *stroke);
 void Drawable_fillCircle(Drawable *self, float cx, float cy, float r, const Brush *brush);
 void Drawable_drawCircle(Drawable *self, float cx, float cy, float r, const Stroke *stroke);
+void Drawable_fillPath(Drawable *self, const Shape *shape, const Brush *brush);
+void Drawable_drawPath(Drawable *self, const Shape *shape, const Stroke *stroke);
 
 // Clear stub (color is packed 0xAARRGGBB like Brush/Stroke): null-guard + mark dirty
 void Drawable_clear(Drawable *self, uint32_t color);

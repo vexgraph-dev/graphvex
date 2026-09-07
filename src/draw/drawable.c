@@ -35,6 +35,8 @@
  *   - Drawable_drawRect(self, x, y, w, h, stroke)
  *   - Drawable_fillCircle(self, cx, cy, r, brush)
  *   - Drawable_drawCircle(self, cx, cy, r, stroke)
+ *   - Drawable_fillPath(self, shape, brush)
+ *   - Drawable_drawPath(self, shape, stroke)
  *   - Drawable_clear(self, color)
  *   - Drawable_free(self)
  *
@@ -126,6 +128,22 @@ void Drawable_drawCircle(Drawable *self, float cx, float cy, float r, const Stro
     (void)cx;
     (void)cy;
     (void)r;
+    (void)stroke;
+    (*self).dirty = true;
+}
+
+void Drawable_fillPath(Drawable *self, const Shape *shape, const Brush *brush) {
+    if (!self)
+        return;
+    (void)shape;
+    (void)brush;
+    (*self).dirty = true;
+}
+
+void Drawable_drawPath(Drawable *self, const Shape *shape, const Stroke *stroke) {
+    if (!self)
+        return;
+    (void)shape;
     (void)stroke;
     (*self).dirty = true;
 }

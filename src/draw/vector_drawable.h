@@ -25,19 +25,21 @@
 #define VECTOR_CMD_FILL_PATH   5u
 #define VECTOR_CMD_DRAW_PATH   6u
 
-// Slot Record: single recorded vector command row
+// Slot Record: single recorded vector command row.
+// VectorCommand borrows Shape via const Shape *shape (borrowed view semantics
+// per Darling source model, caller retains, never freed by VectorDrawable).
 typedef struct VectorCommand {
-    uint32_t kind;   // command kind (VECTOR_CMD_*)
-    float x;         // rect origin X
-    float y;         // rect origin Y
-    float w;         // rect width
-    float h;         // rect height
-    float cx;        // circle center X
-    float cy;        // circle center Y
-    float r;         // circle radius
-    Shape shape;     // path geometry
-    Brush brush;     // fill brush style
-    Stroke stroke;   // stroke style
+    uint32_t kind;      // command kind (VECTOR_CMD_*)
+    float x;            // rect origin X
+    float y;            // rect origin Y
+    float w;            // rect width
+    float h;            // rect height
+    float cx;           // circle center X
+    float cy;           // circle center Y
+    float r;            // circle radius
+    const Shape *shape; // borrowed view of path geometry (caller retains, never freed by VectorDrawable)
+    Brush brush;        // fill brush style
+    Stroke stroke;      // stroke style
 } VectorCommand;
 
 typedef struct VectorDrawable {
@@ -77,7 +79,6 @@ void VectorDrawable_setSize(VectorDrawable *self, uint32_t w, uint32_t h);
 void VectorDrawable_setWidth(VectorDrawable *self, uint32_t width);
 void VectorDrawable_setHeight(VectorDrawable *self, uint32_t height);
 void VectorDrawable_setDirty(VectorDrawable *self, bool dirty);
-void VectorDrawable_setTypeId(VectorDrawable *self, uint64_t typeId);
 
 // Symmetric Getters
 void VectorDrawable_getPan(const VectorDrawable *self, float *outPanX, float *outPanY);

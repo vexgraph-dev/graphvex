@@ -75,6 +75,7 @@ add_library(graphvex STATIC
     src/vector/shape.c
     src/draw/layered_drawable.c
     src/draw/vector_drawable.c
+    src/draw/layered_vector_drawable.c
 )
 
 target_include_directories(graphvex PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)

@@ -33,20 +33,20 @@
  *     uint64_t typeId;         // block-header type id (TYPE_VECTOR_DRAWABLE_SINGLETON)
  *   }
  *
- * PRIVATE HELPERS (kept file-local pure-data only, each with full fields):
+ * SLOT RECORD (dumb entry struct owned exclusively by VectorDrawable):
  * ----------------------------------------------------------------------------
  *   VectorCommand {
- *     uint32_t kind;   // command opcode (1=FILL_RECT, 2=DRAW_RECT, 3=FILL_CIRCLE, 4=DRAW_CIRCLE, 5=FILL_PATH, 6=DRAW_PATH)
- *     float x;         // rect origin X in world coords
- *     float y;         // rect origin Y in world coords
- *     float w;         // rect width in world units
- *     float h;         // rect height in world units
- *     float cx;        // circle center X in world coords
- *     float cy;        // circle center Y in world coords
- *     float r;         // circle radius in world units
- *     Shape shape;     // path geometry for path commands
- *     Brush brush;     // fill brush style
- *     Stroke stroke;   // draw stroke style
+ *     uint32_t kind;      // command opcode (1=FILL_RECT, 2=DRAW_RECT, 3=FILL_CIRCLE, 4=DRAW_CIRCLE, 5=FILL_PATH, 6=DRAW_PATH)
+ *     float x;            // rect origin X in world coords
+ *     float y;            // rect origin Y in world coords
+ *     float w;            // rect width in world units
+ *     float h;            // rect height in world units
+ *     float cx;           // circle center X in world coords
+ *     float cy;           // circle center Y in world coords
+ *     float r;            // circle radius in world units
+ *     const Shape *shape; // borrowed view of path geometry (caller retains, never freed by VectorDrawable)
+ *     Brush brush;        // fill brush style
+ *     Stroke stroke;      // draw stroke style
  *   }
  *
  * FUNCTION REGISTRY:
@@ -75,7 +75,6 @@
  *   - VectorDrawable_setWidth(self, width)
  *   - VectorDrawable_setHeight(self, height)
  *   - VectorDrawable_setDirty(self, dirty)
- *   - VectorDrawable_setTypeId(self, typeId)
  *
  * Getters:
  *   - VectorDrawable_getPan(self, outPanX, outPanY)
@@ -217,8 +216,7 @@ void VectorDrawable_fillPath(VectorDrawable *self, const Shape *shape, const Bru
     VectorCommand *cmd = vectorDrawableAddCommand(self, VECTOR_CMD_FILL_PATH);
     if (!cmd)
         return;
-    if (shape)
-        (*cmd).shape = *shape;
+    (*cmd).shape = shape;
     if (brush)
         (*cmd).brush = *brush;
 }
@@ -227,8 +225,7 @@ void VectorDrawable_drawPath(VectorDrawable *self, const Shape *shape, const Str
     VectorCommand *cmd = vectorDrawableAddCommand(self, VECTOR_CMD_DRAW_PATH);
     if (!cmd)
         return;
-    if (shape)
-        (*cmd).shape = *shape;
+    (*cmd).shape = shape;
     if (stroke)
         (*cmd).stroke = *stroke;
 }
@@ -257,6 +254,10 @@ void VectorDrawable_render(VectorDrawable *self, Drawable *dest) {
             Drawable_fillCircle(dest, ((*cmd).cx + px) * z, ((*cmd).cy + py) * z, (*cmd).r * z, &(*cmd).brush);
         else if (kind == VECTOR_CMD_DRAW_CIRCLE)
             Drawable_drawCircle(dest, ((*cmd).cx + px) * z, ((*cmd).cy + py) * z, (*cmd).r * z, &(*cmd).stroke);
+        else if (kind == VECTOR_CMD_FILL_PATH && (*cmd).shape)
+            Drawable_fillPath(dest, (*cmd).shape, &(*cmd).brush);
+        else if (kind == VECTOR_CMD_DRAW_PATH && (*cmd).shape)
+            Drawable_drawPath(dest, (*cmd).shape, &(*cmd).stroke);
     }
     Drawable_setDirty(dest, true);
 }
@@ -317,12 +318,6 @@ void VectorDrawable_setDirty(VectorDrawable *self, bool dirty) {
     if (!self)
         return;
     (*self).dirty = dirty;
-}
-
-void VectorDrawable_setTypeId(VectorDrawable *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS
