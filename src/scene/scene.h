@@ -9,12 +9,7 @@
 #include "draw/drawable.h"
 #include "graphvex/type.h"
 
-#if __has_include("mesh/mesh.h")
 #include "mesh/mesh.h"
-#else
-struct Mesh;
-typedef struct Mesh Mesh;
-#endif
 
 // scene/scene.h — Rendered scene: mesh + transform + material list.
 
@@ -50,7 +45,6 @@ void Scene_render(Scene *self, Drawable *drawable);
 void Scene_setCamera(Scene *self, const float *view16, const float *proj16);
 void Scene_setClearColor(Scene *self, uint32_t clearColor);
 void Scene_setDirty(Scene *self, bool dirty);
-void Scene_setTypeId(Scene *self, uint64_t typeId);
 
 // Getters
 size_t Scene_getNodeCount(const Scene *self);

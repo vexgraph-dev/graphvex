@@ -29,7 +29,7 @@
  *     uint64_t typeId;          // block-header type id (TYPE_SCENE_SINGLETON)
  *   }
  *
- * PRIVATE HELPERS (kept file-local pure-data only, each with full fields):
+ * SLOT RECORD (dumb entry struct owned exclusively by Scene):
  * ----------------------------------------------------------------------------
  *   SceneNode {
  *     const Mesh *mesh;         // borrowed mesh geometry pointer
@@ -54,7 +54,6 @@
  *   - Scene_setCamera(self, view16, proj16)
  *   - Scene_setClearColor(self, clearColor)
  *   - Scene_setDirty(self, dirty)
- *   - Scene_setTypeId(self, typeId)
  *
  * Getters:
  *   - Scene_getNodeCount(self)
@@ -184,12 +183,6 @@ void Scene_setDirty(Scene *self, bool dirty) {
     if (!self)
         return;
     (*self).dirty = dirty;
-}
-
-void Scene_setTypeId(Scene *self, uint64_t typeId) {
-    if (!self)
-        return;
-    (*self).typeId = typeId;
 }
 
 // GETTERS
