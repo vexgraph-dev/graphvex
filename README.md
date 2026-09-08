@@ -1,4 +1,4 @@
-# graphvex
+# graphvex — R1.5 GPU compute (supervised by R0 hotcwap Kernel)
 all graphics computing lies here, bespoken
 
 ## Boilerplate (shared, not vendored)
