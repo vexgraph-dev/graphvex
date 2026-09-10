@@ -110,7 +110,7 @@ if(APPLE)
 endif()
 endif() # NOT TARGET graphvex
 
-# Buffer smoke test (relocated from the vexspoke `anti` harness with the move).
+# Buffer smoke test (relocated from the vexspoke `vexspoke_demo` harness with the move).
 add_executable(buffer_test
     tests/buffer_test.c
 )
