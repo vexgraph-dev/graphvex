@@ -12,7 +12,7 @@
  * CLASS: LayeredDrawable (draw/layered_drawable.c)
  * LEVEL: L3 — Module Code (multi-layer raster board behavior)
  * ============================================================================
- * Ibis board: N Drawable layers + active index + opacity + blend + visibleMask.
+ * N Drawable layers + active index + opacity + blend + visibleMask.
  * Max 32 layers bitmask. CPU stub: records layer mutations and marks dirty
  * without rasterizing on GPU. Exposes layers exclusively via Rule 29
  * LayeredDrawable_layer* verbs.
@@ -151,7 +151,7 @@ static LayeredDrawable *layeredDrawableCreate(uint32_t w, uint32_t h, size_t ini
 }
 
 // CONSTRUCTORS
-LayeredDrawable *LayeredDrawable_0(void) {
+LayeredDrawable *LayeredDrawable_0() {
     return layeredDrawableCreate(1, 1, 1);
 }
 
@@ -245,8 +245,8 @@ bool LayeredDrawable_removeLayer(LayeredDrawable *self, uint32_t index) {
     }
     (*self).layers[(*self).layerCount - 1] = nullptr;
 
-    uint32_t lower = (index == 0) ? 0 : ((*self).visibleMask & ((1u << index) - 1));
-    uint32_t upper = (index >= 31) ? 0 : (((*self).visibleMask >> (index + 1)) << index);
+    const uint32_t lower = (index == 0) ? 0 : ((*self).visibleMask & ((1u << index) - 1));
+    const uint32_t upper = (index >= 31) ? 0 : (((*self).visibleMask >> (index + 1)) << index);
     (*self).visibleMask = lower | upper;
 
     (*self).layerCount--;
