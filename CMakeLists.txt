@@ -55,6 +55,7 @@ add_library(graphvex STATIC
     src/vulkan/vk_iosurface.c
     src/vulkan/texture/texture.c
     src/image/image.c
+    src/image/frame_importer.c
     src/sync/fence.c
     src/sync/semaphore.c
     src/sync/command_buffer.c
